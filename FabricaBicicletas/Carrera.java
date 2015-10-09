@@ -12,6 +12,9 @@ public class Carrera{
 	private Persona competidor2 = new Persona(105.50,bicicleta2);
 	private Persona competidor3 = new Persona(60.50,bicicleta3);
 
+	FabricaBicicleta b1 = new FabricaBicicleta();
+	b1.color;
+	private Color color = FabricaBicicleta.color;
 	public Persona competencia(Persona competidor1, Persona competidor2, Persona competidor3){
 		int d1 = 0, d2 = 0, d3 = 0;
 		while(d1 <= 100 || d2 <= 100 || d3 <= 100 ){}

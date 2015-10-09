@@ -36,9 +36,11 @@ public class FabricaBicicleta{
 		this.peso = peso;
 	}
 
+
 	public FabricaBicicleta(Color color, double peso){
 		this.color = color;
 		this.peso = peso;
+
 	}
 
 
