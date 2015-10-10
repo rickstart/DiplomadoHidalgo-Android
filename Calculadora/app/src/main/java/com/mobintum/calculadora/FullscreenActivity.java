@@ -76,6 +76,19 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    public String formatResult(String result){
+
+        if(result.contains(".")) {
+            String number[] = result.split("\\.");
+
+            if (Integer.parseInt(number[1]) == 0) {
+                return number[0];
+            } else {
+                return result;
+            }
+        }
+        return result;
+    }
 
 
 
@@ -141,7 +154,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 if( oper1!=0.0 && oper2 != 0.0 ){
-                    textResult.setText(operation(typeOper, oper1,oper2).toString());
+                    textResult.setText(formatResult(operation(typeOper, oper1, oper2).toString()));
                     oper1=operation(typeOper, oper1,oper2);
                     oper2=0.0;
                     flagOper = false;
@@ -161,7 +174,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 if( oper1!=0.0 && oper2 != 0.0 ){
-                    textResult.setText(operation(typeOper, oper1,oper2).toString());
+                    textResult.setText(formatResult(operation(typeOper, oper1,oper2).toString()));
                     oper1=operation(typeOper, oper1,oper2);
                     oper2=0.0;
                     flagOper = false;
@@ -195,7 +208,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 if( oper1!=0.0 && oper2 != 0.0 ){
-                    textResult.setText(operation(typeOper, oper1,oper2).toString());
+                    textResult.setText(formatResult(operation(typeOper, oper1, oper2).toString()));
                     oper1=operation(typeOper, oper1,oper2);
                     oper2=0.0;
                     flagOper = false;
@@ -225,7 +238,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 if( oper1!=0.0 && oper2 != 0.0 ){
-                    textResult.setText(operation(typeOper, oper1,oper2).toString());
+                    textResult.setText(formatResult(operation(typeOper, oper1, oper2).toString()));
                     oper1=operation(typeOper, oper1,oper2);
                     oper2=0.0;
                     flagOper = false;
@@ -256,7 +269,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 if( oper1!=0.0 && oper2 != 0.0 ){
-                    textResult.setText(operation(typeOper, oper1,oper2).toString());
+                    textResult.setText(formatResult(operation(typeOper, oper1,oper2).toString()));
                     oper1=operation(typeOper, oper1,oper2);
                     oper2=0.0;
                     flagOper = false;
