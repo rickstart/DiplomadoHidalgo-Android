@@ -10,16 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SongRVAdapter.SetOnItemClickListener {
 
     private RecyclerView rvSongs;
     private RecyclerView.LayoutManager mLayoutManager;
     private SongRVAdapter mAdapter;
     private List<Song> songs = new ArrayList<>();
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +29,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         loadSongs();
         rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
         mLayoutManager = new LinearLayoutManager(this);
         rvSongs.setHasFixedSize(true);
         rvSongs.setLayoutManager(mLayoutManager);
-        mAdapter = new SongRVAdapter(songs);
+        mAdapter = new SongRVAdapter(songs, this);
         rvSongs.setAdapter(mAdapter);
+
 
 
 
@@ -75,5 +80,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void itemClick(Song song) {
+
     }
 }
