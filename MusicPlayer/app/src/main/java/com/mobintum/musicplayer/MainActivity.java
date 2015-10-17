@@ -1,6 +1,8 @@
 package com.mobintum.musicplayer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements SongRVAdapter.Set
     }
 
     private void loadSongs(){
-        songs.add(new Song("Photograph","Ed Sheeran","Photograph", "photograph","4:34",getResources().getDrawable(R.drawable.tmb_photograph)));
-        songs.add(new Song("Wicked Game","Isaak","Wicked Game", "wicked_game","4:03",getResources().getDrawable(R.drawable.tmb_wicked_game)));
-        songs.add(new Song("Lean On","Major Lazer & DJ Snake","Lean On", "lean_on","2:58",getResources().getDrawable(R.drawable.tmb_lean_on)));
-        songs.add(new Song("See You Again","Wiz Khalifa ft. Charlie Puth","Fast & Furious 7", "see_you_again","2:58",getResources().getDrawable(R.drawable.tmb_see_you_again)));
+        songs.add(new Song("Photograph","Ed Sheeran","Photograph", "photograph","4:34",R.drawable.tmb_photograph));
+        songs.add(new Song("Wicked Game","Isaak","Wicked Game", "wicked_game","4:03",R.drawable.tmb_wicked_game));
+        songs.add(new Song("Lean On","Major Lazer & DJ Snake","Lean On", "lean_on","2:58",R.drawable.tmb_lean_on));
+        songs.add(new Song("See You Again","Wiz Khalifa ft. Charlie Puth","Fast & Furious 7", "see_you_again","2:58",R.drawable.tmb_see_you_again));
     }
 
     @Override
@@ -84,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements SongRVAdapter.Set
 
     @Override
     public void itemClick(Song song) {
+
+        Intent intent = new Intent(this, DetailSongActivity.class);
+        intent.putExtra("song", song);
+        startActivity(intent);
 
     }
 }

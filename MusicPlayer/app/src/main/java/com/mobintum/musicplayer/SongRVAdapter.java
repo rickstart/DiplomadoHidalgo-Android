@@ -1,5 +1,6 @@
 package com.mobintum.musicplayer;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 public class SongRVAdapter extends RecyclerView.Adapter<SongRVAdapter.ViewHolder>{
     private List<Song> songs;
     private SetOnItemClickListener mListener;
+    private Context context;
 
     public SongRVAdapter(List<Song> songs, SetOnItemClickListener mListener) {
         this.songs = songs;
@@ -24,6 +26,7 @@ public class SongRVAdapter extends RecyclerView.Adapter<SongRVAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_song, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
@@ -36,7 +39,7 @@ public class SongRVAdapter extends RecyclerView.Adapter<SongRVAdapter.ViewHolder
         holder.txtAlbum.setText(song.getAlbum());
         holder.txtArtist.setText(song.getArtist());
         holder.txtTime.setText(song.getTime());
-        holder.imgAlbum.setImageDrawable(song.getAlbumImage());
+        holder.imgAlbum.setImageDrawable(context.getResources().getDrawable(song.getAlbumImage()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

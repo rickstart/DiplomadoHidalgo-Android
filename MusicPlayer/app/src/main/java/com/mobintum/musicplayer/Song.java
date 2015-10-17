@@ -1,19 +1,25 @@
 package com.mobintum.musicplayer;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * Created by Rick on 17/10/15.
  */
-public class Song {
+public class Song implements Serializable{
     private String title;
     private String artist;
     private String album;
     private String fileName;
     private String time;
-    private Drawable albumImage;
+    private int albumImage;
 
-    public Song(String title, String artist, String album, String fileName, String time, Drawable albumImage) {
+    public Song(String title, String artist, String album, String fileName, String time, int albumImage) {
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -21,6 +27,16 @@ public class Song {
         this.time = time;
         this.albumImage = albumImage;
     }
+
+    protected Song(Parcel in) {
+        title = in.readString();
+        artist = in.readString();
+        album = in.readString();
+        fileName = in.readString();
+        time = in.readString();
+    }
+
+
 
     public String getTitle() {
         return title;
@@ -62,11 +78,13 @@ public class Song {
         this.time = time;
     }
 
-    public Drawable getAlbumImage() {
+    public int getAlbumImage() {
         return albumImage;
     }
 
-    public void setAlbumImage(Drawable albumImage) {
+    public void setAlbumImage(int albumImage) {
         this.albumImage = albumImage;
     }
+
+
 }
