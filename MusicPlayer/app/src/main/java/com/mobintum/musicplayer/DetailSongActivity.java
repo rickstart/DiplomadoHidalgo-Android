@@ -20,10 +20,7 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
     private MediaPlayer mPlayer;
     private int flag=0;
     private Thread thread;
-    int seconds;
-    int minutes;
-    int hours;
-
+    private int minutes, seconds, hours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +53,13 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
 
     private void loadData(Song song){
 
-        mPlayer = MediaPlayer.create(
-                getApplicationContext(),
-                getResources().getIdentifier("raw/"+song.getFileName(),
-                        "raw",
-                        getPackageName()));
+        textDetailSongF.setText(song.getTitle());
+        textDetailArtistF.setText(song.getArtist());
+        textDetailAlbumF.setText(song.getAlbum());
+        imgThumbDetailF.setImageDrawable(getResources().getDrawable(song.getAlbumImage()));
+        mPlayer = MediaPlayer.create(this,  getResources().getIdentifier("raw/"+song.getFileName(),
+                "raw", this.getPackageName()));
+
 
         progressBarF.setVisibility(ProgressBar.VISIBLE);
         progressBarF.setProgress(0);
@@ -140,5 +139,6 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
 
 
         }
+
     }
 }
