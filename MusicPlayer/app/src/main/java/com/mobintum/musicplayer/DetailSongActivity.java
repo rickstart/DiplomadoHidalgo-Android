@@ -20,6 +20,10 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
     private MediaPlayer mPlayer;
     private int flag=0;
     private Thread thread;
+    int seconds;
+    int minutes;
+    int hours;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,22 +56,12 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
 
     private void loadData(Song song){
 
-        textDetailSongF.setText(song.getTitle());
-        textDetailArtistF.setText(song.getArtist());
-        textDetailAlbumF.setText(song.getAlbum());
-        imgThumbDetailF.setImageDrawable(getResources().getDrawable(song.getAlbumImage()));
-        mPlayer = MediaPlayer.create(this,  getResources().getIdentifier("raw/"+song.getFileName(),
-                "raw", this.getPackageName()));
+        mPlayer = MediaPlayer.create(
+                getApplicationContext(),
+                getResources().getIdentifier("raw/"+song.getFileName(),
+                        "raw",
+                        getPackageName()));
 
-
-        int seconds = (int) (mPlayer.getDuration() / 1000) % 60 ;
-        int minutes = (int) ((mPlayer.getDuration() / (1000*60)) % 60);
-        int hours   = (int) ((mPlayer.getDuration() / (1000*60*60)) % 24);
-        if(hours>0) {
-            textDetailTimeF.setText("" + hours + ":" + minutes + ":" + seconds);
-        }else{
-            textDetailTimeF.setText(""+minutes + ":" + seconds);
-        }
         progressBarF.setVisibility(ProgressBar.VISIBLE);
         progressBarF.setProgress(0);
         progressBarF.setMax(mPlayer.getDuration());
@@ -114,18 +108,37 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void run() {
-        int currentPosition= 0;
+        int currentPosition = 0;
         int total = mPlayer.getDuration();
-        while (mPlayer!=null && currentPosition<total) {
-            try {
+        while(mPlayer!=null && currentPosition<total){
+            try{
                 Thread.sleep(1000);
-                currentPosition= mPlayer.getCurrentPosition();
-            } catch (InterruptedException e) {
-                return;
-            } catch (Exception e) {
+                currentPosition = mPlayer.getCurrentPosition();
+                seconds = (currentPosition / 1000) % 60;
+                minutes = (currentPosition / (1000 * 60)) % 60;
+                hours = (currentPosition / (1000*60*60)) % 60;
+
+
+                runOnUiThread( new Runnable() {
+                    @Override
+                    public void run() {
+                        if(hours>0){
+                            textDetailTimeF.setText(""+hours+":"+minutes+":"+seconds);
+                        }else{
+                            textDetailTimeF.setText(""+minutes+":"+seconds);
+                        }
+
+                    }
+                });
+
+                progressBarF.setProgress(currentPosition);
+
+            }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
-            progressBarF.setProgress(currentPosition);
+
+
         }
     }
 }
