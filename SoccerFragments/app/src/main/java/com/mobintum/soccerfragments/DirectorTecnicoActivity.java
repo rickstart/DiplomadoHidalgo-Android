@@ -81,7 +81,10 @@ public class DirectorTecnicoActivity extends AppCompatActivity implements View.O
 
     @Override
     public void mensaje(String msg) {
-        Jugador1Fragment fragment = (Jugador1Fragment) getSupportFragmentManager().findFragmentByTag(Jugador1Fragment.TAG);
-        fragment.setInstruccion(msg);
+        Jugador2Fragment fragment = (Jugador2Fragment) getSupportFragmentManager().findFragmentByTag(Jugador2Fragment.TAG);
+        if(fragment!=null){
+            fragment.enviaMensaje(msg);
+        }
+
     }
 }

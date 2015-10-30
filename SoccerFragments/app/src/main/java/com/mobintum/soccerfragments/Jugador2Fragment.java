@@ -17,6 +17,7 @@ public class Jugador2Fragment extends Fragment {
     public static final String TAG = "Jugador2Fragment";
     private static final String ARG_PARAM_INSTRUCCION = "paramInstruccion";
     private String instruccion;
+    private TextView txtInstruccion;
 
 
     public static Jugador2Fragment newInstance(String instruccion){
@@ -44,9 +45,15 @@ public class Jugador2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_jugador2, container, false);
-        TextView txtInstruccion = (TextView) view.findViewById(R.id.txtInstruccion);
+        txtInstruccion = (TextView) view.findViewById(R.id.txtInstruccion);
         txtInstruccion.setText(instruccion);
         return view;
+    }
+
+    public void enviaMensaje(String mensaje){
+        txtInstruccion.setText(mensaje);
+
+
     }
 
 
