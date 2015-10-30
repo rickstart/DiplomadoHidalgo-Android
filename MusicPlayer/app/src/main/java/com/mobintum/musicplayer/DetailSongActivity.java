@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class DetailSongActivity extends AppCompatActivity implements View.OnClickListener, Runnable {
 
     private ImageButton btnPlayF, btnForwardF, btnBackwardF;
@@ -21,6 +23,8 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
     private int flag=0;
     private Thread thread;
     private int minutes, seconds, hours;
+    private List<Song> songs;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_detail_song);
 
         if(getIntent()!=null){
-            song =  (Song) getIntent().getExtras().getSerializable("song");
+            position =  getIntent().getExtras().getInt("position");
         }
 
         btnPlayF = (ImageButton) findViewById(R.id.btnPlayF);
@@ -47,12 +51,14 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
         btnForwardF.setOnClickListener(this);
 
         thread= new Thread(this);
-        loadData(song);
+        songs = MainActivity.loadSongs();
+        loadData(position);
 
     }
 
-    private void loadData(Song song){
+    private void loadData(int position){
 
+        Song song = songs.get(position);
         textDetailSongF.setText(song.getTitle());
         textDetailArtistF.setText(song.getArtist());
         textDetailAlbumF.setText(song.getAlbum());
@@ -68,6 +74,32 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    private void play(){
+        if(flag==0){
+
+            mPlayer.start();
+            flag=1;
+            btnPlayF.setImageResource(R.drawable.btn_pause);
+
+
+            if(thread.getState()!= Thread.State.TIMED_WAITING)
+                thread.start();
+
+        }else{
+            mPlayer.pause();
+            btnPlayF.setImageResource(R.drawable.btn_play);
+            flag=0;
+
+        }
+
+    }
+
+    private void stop(){
+        mPlayer.stop();
+        btnPlayF.setImageResource(R.drawable.btn_play);
+        flag=0;
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -75,28 +107,24 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId())
         {
             case R.id.btnPlayF:
-
-
-                if(flag==0){
-
-                    mPlayer.start();
-                    flag=1;
-                    btnPlayF.setImageResource(R.drawable.btn_pause);
-
-
-                   if(thread.getState()!= Thread.State.TIMED_WAITING)
-                        thread.start();
-
-                }else{
-                    mPlayer.pause();
-                    btnPlayF.setImageResource(R.drawable.btn_play);
-                    flag=0;
-
-                }
+                play();
                 break;
             case R.id.btnBackwardF:
+                if(position>0) {
+                    position--;
+                    stop();
+                    loadData(position);
+                    play();
+                }
                 break;
             case R.id.btnForwardF:
+                if(position<(songs.size()-1)){
+                    position++;
+                    stop();
+                    loadData(position);
+                    play();
+
+                }
                 break;
         }
 
@@ -140,5 +168,11 @@ public class DetailSongActivity extends AppCompatActivity implements View.OnClic
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stop();
     }
 }

@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements SongRVAdapter.Set
     private RecyclerView rvSongs;
     private RecyclerView.LayoutManager mLayoutManager;
     private SongRVAdapter mAdapter;
-    private List<Song> songs = new ArrayList<>();
     private Snackbar snackbar;
 
     @Override
@@ -33,13 +32,11 @@ public class MainActivity extends AppCompatActivity implements SongRVAdapter.Set
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        loadSongs();
         rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
         mLayoutManager = new LinearLayoutManager(this);
         rvSongs.setHasFixedSize(true);
         rvSongs.setLayoutManager(mLayoutManager);
-        mAdapter = new SongRVAdapter(songs, this);
+        mAdapter = new SongRVAdapter(loadSongs(), this);
         rvSongs.setAdapter(mAdapter);
 
 
@@ -56,11 +53,13 @@ public class MainActivity extends AppCompatActivity implements SongRVAdapter.Set
         });
     }
 
-    private void loadSongs(){
+    public static List<Song> loadSongs(){
+        List<Song> songs = new ArrayList<>();
         songs.add(new Song("Photograph","Ed Sheeran","Photograph", "photograph","4:34",R.drawable.tmb_photograph));
         songs.add(new Song("Wicked Game","Isaak","Wicked Game", "wicked_game","4:03",R.drawable.tmb_wicked_game));
         songs.add(new Song("Lean On","Major Lazer & DJ Snake","Lean On", "lean_on","2:58",R.drawable.tmb_lean_on));
         songs.add(new Song("See You Again","Wiz Khalifa ft. Charlie Puth","Fast & Furious 7", "see_you_again","2:58",R.drawable.tmb_see_you_again));
+        return songs;
     }
 
     @Override
@@ -86,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements SongRVAdapter.Set
     }
 
     @Override
-    public void itemClick(Song song) {
+    public void itemClick(int position) {
 
         Intent intent = new Intent(this, DetailSongActivity.class);
-        intent.putExtra("song", song);
+        intent.putExtra("position", position);
         startActivity(intent);
 
     }

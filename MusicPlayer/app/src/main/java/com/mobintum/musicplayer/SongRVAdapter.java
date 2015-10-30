@@ -33,7 +33,7 @@ public class SongRVAdapter extends RecyclerView.Adapter<SongRVAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final Song song = songs.get(position);
         holder.txtTitle.setText(song.getTitle());
         holder.txtAlbum.setText(song.getAlbum());
@@ -43,7 +43,7 @@ public class SongRVAdapter extends RecyclerView.Adapter<SongRVAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.itemClick(song);
+                mListener.itemClick(position);
             }
         });
 
@@ -81,7 +81,7 @@ public class SongRVAdapter extends RecyclerView.Adapter<SongRVAdapter.ViewHolder
 
 
     public interface SetOnItemClickListener{
-        public void itemClick(Song song);
+        public void itemClick(int position);
     }
 
 }
