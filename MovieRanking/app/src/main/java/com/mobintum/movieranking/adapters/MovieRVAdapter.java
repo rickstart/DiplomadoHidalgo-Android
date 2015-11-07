@@ -47,6 +47,9 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.ViewHold
                 mListener.itemClick(movie);
             }
         });
+        if(position==getItemCount()-1)
+            mListener.refreshList(position);
+
     }
 
     @Override
@@ -74,6 +77,7 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.ViewHold
 
     public interface OnItemClickListener{
         public void itemClick(Movie movie);
+        public void refreshList(int position);
 
     }
 }

@@ -6,4 +6,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="critic_score">Critic Score</string>
     <string name="audience_score">Audience Score</string>
+    <string name="action_search">search</string>
+    <string name="action_loading">Loading</string>
 </resources>
